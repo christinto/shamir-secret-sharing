@@ -1,6 +1,10 @@
 secrets.js
 ==========
 
+Fork of [secrets](https://github.com/grempe/secrets.js)
+Do not use this fork for production purposes
+Refer to original [secrets](https://github.com/grempe/secrets.js) repo for anything
+
 - [What is it?](#what-is-it)
 - [Examples](#examples)
 - [Installation and usage](#installation-and-usage)
