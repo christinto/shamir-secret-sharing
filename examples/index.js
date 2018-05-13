@@ -5,14 +5,13 @@ const crypto = require('crypto');
 var threshold = 5;
 var totalShares = 10;
 
-
 // generate a 512-bit key
 var key = secrets.random(512); // => key is a hex string
 console.log("Randomly Generated Key:",key,"\n");
-const hmac = crypto.createHmac('sha256', key);
-console.log("hmac of key:",hmac);
 
-
+const hash = crypto.createHmac('sha256')
+                   .update(Buffer.from(key, 'hex'))
+                   .digest('hex');
 
 // split into 10 shares with a threshold of 5
 var shares = secrets.share(key,totalShares, threshold);
@@ -28,7 +27,7 @@ console.log("Keys used:",testKey.length,"\n",testKey,"\n Can create original sec
 // combine 5 shares to verify if it works
 testKey = shares.slice(4,9)
 comb = secrets.combine( testKey );
-console.log("Keys used:",testKey.length,"\n",testKey,"\n Can create original secret:", crypto.createHmac('sha256',comb) === hmac,"\n");
+console.log("Keys used:",testKey.length,"\n",testKey,"\n Can create original secret:", comb === key,"\n");
 
 
 
