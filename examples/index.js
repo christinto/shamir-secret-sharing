@@ -1,5 +1,6 @@
 // var http = require('http');
 var secrets = require('../secrets.js');
+const crypto = require('crypto');
 
 var threshold = 5;
 var totalShares = 10;
@@ -8,6 +9,9 @@ var totalShares = 10;
 // generate a 512-bit key
 var key = secrets.random(512); // => key is a hex string
 console.log("Randomly Generated Key:",key,"\n");
+const hmac = crypto.createHmac('sha256', key);
+console.log("hmac of key:",hmac);
+
 
 
 // split into 10 shares with a threshold of 5
@@ -24,12 +28,9 @@ console.log("Keys used:",testKey.length,"\n",testKey,"\n Can create original sec
 // combine 5 shares to verify if it works
 testKey = shares.slice(4,9)
 comb = secrets.combine( testKey );
-console.log("Keys used:",testKey.length,"\n",testKey,"\n Can create original secret:", comb === key,"\n");
+console.log("Keys used:",testKey.length,"\n",testKey,"\n Can create original secret:", crypto.createHmac('sha256',comb) === hmac,"\n");
 
-var key1 = sjcl.codec.utf8String.toBits("key");
-var out = (new sjcl.misc.hmac(key1, sjcl.hash.sha256)).mac("The quick brown fox jumps over the lazy dog");
-var hmac = sjcl.codec.hex.fromBits(out)
-console.log(hmac);
+
 
 //
 
