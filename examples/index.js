@@ -1,3 +1,6 @@
+// Generates hash of the original secret and discards the original secret
+// upon regeneration of the secret using threshold shares, verifies with original hash to check if its the same 
+
 // var http = require('http');
 var secrets = require('../secrets.js');
 var SHA256 = require("crypto-js/sha256");
@@ -31,7 +34,6 @@ comb = secrets.combine( testKey );
 var genHash = SHA256(comb)
 console.log(genHash);
 console.log("Keys used:",testKey.length,"\n",testKey,"\n Can create original secret:", genHash === orgHash,"\n");
-
 
 
 //
